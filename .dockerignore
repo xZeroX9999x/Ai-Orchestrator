@@ -1,0 +1,45 @@
+# Git
+.git
+.gitignore
+.gitattributes
+
+# Python
+__pycache__
+*.py[cod]
+*.egg-info
+build/
+dist/
+.venv
+venv
+
+# Testing & coverage
+.pytest_cache
+.coverage*
+htmlcov
+.tox
+.mypy_cache
+.ruff_cache
+
+# IDE
+.idea
+.vscode
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# CI / docs (no se necesitan dentro del contenedor)
+.github
+docs
+*.md
+!README.md
+
+# Docker
+Dockerfile
+.dockerignore
+docker-compose*.yml
+
+# Secrets
+.env
+.env.*
