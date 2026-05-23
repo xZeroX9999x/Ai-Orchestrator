@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Preguntas y discusiones
+    url: https://github.com/yourname/ai-orchestrator/discussions
+    about: Para preguntas generales, ideas o ayuda, usa Discussions.
