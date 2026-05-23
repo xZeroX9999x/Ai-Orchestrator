@@ -1,0 +1,48 @@
+# docker-compose.yml
+#
+# Levanta Ollama y la app conectada al mismo network.
+#
+#   docker compose run --rm app --idea "tu idea aquí"
+#   docker compose run --rm app                       # modo interactivo
+#
+# Para usar GPU NVIDIA, instala nvidia-container-toolkit y descomenta
+# la sección `deploy` del servicio `ollama`.
+
+services:
+  ollama:
+    image: ollama/ollama:latest
+    container_name: ai-orch-ollama
+    restart: unless-stopped
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama-models:/root/.ollama
+    healthcheck:
+      test: ["CMD", "ollama", "list"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    # deploy:
+    #   resources:
+    #     reservations:
+    #       devices:
+    #         - driver: nvidia
+    #           count: all
+    #           capabilities: [gpu]
+
+  app:
+    build: .
+    image: ai-orchestrator:latest
+    container_name: ai-orch-app
+    depends_on:
+      ollama:
+        condition: service_healthy
+    environment:
+      OLLAMA_BASE_URL: http://ollama:11434/v1
+    stdin_open: true   # para input() en modo interactivo
+    tty: true
+
+volumes:
+  ollama-models:
+    name: ai-orch-ollama-models
